@@ -22,7 +22,7 @@ export default function Home() {
 
       <h1
         className={`
-          pt-24 pb-48 px-5
+          pt-24 pb-24 px-5
           text-[12rem]
           text-center
           bg-gradient-to-r from-pink-500 to-yellow-500
@@ -41,7 +41,7 @@ export default function Home() {
             className={`
               relative
               flex items-center justify-center
-              ${expanded ? "w-full max-w-xl" : "w-auto"}
+              ${expanded ? "w-full max-w-xl" : "w-auto rounded-full overflow-hidden"}
             `}
           >
             <motion.button
@@ -49,12 +49,12 @@ export default function Home() {
               className={`
                 relative
                 
-                rounded-xl
+                rounded-full
                 text-white
                 shadow-lg shadow-pink-500/20
-                transition-colors duration-300
-                hover:from-pink-600 hover:to-yellow-600
-                ${expanded ? "w-full p-8" : "px-8 py-4"}
+                transition-colors duration-300  
+                hover:from-pink-600 hover:to-yellow-600 
+                ${expanded ? "w-full px-14 py-6 rounded-full  " : "px-12   text-xl py-6 "}
                 ${
                   expanded
                     ? ""
@@ -79,8 +79,8 @@ export default function Home() {
                       flex-1
                       bg-gradient-to-r from-pink-500 to-yellow-500
                       hover:from-pink-600 hover:to-yellow-600
-                      text-white font-semibold text-xl
-                      py-2 rounded-xl
+                      text-white font-thin text-xl
+                      py-4 rounded-full w-1/2
                       transition-all duration-200
                       shadow-lg shadow-pink-500/20
                     "
@@ -92,8 +92,8 @@ export default function Home() {
                       flex-1
                       bg-gradient-to-r from-pink-500 to-yellow-500
                       hover:from-pink-600 hover:to-yellow-600
-                      text-white font-semibold text-xl
-                      py-2 rounded-xl
+                      text-white font-thin text-xl
+                      py-4 rounded-full w-1/2
                       transition-all duration-200
                       shadow-lg shadow-pink-500/20
                     "

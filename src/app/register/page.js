@@ -152,9 +152,14 @@ function SuccessMessage() {
 
 export default function Register() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isWalletConnected, setIsWalletConnected] = useState(false);
 
   const handleFormSubmit = () => {
     setIsSubmitted(true);
+  };
+
+  const handleWalletConnect = () => {
+    setIsWalletConnected(true);
   };
 
   return (
@@ -165,8 +170,25 @@ export default function Register() {
       <AnimatePresence mode="wait">
         {isSubmitted ? (
           <SuccessMessage key="success" />
-        ) : (
+        ) : isWalletConnected ? (
           <RegisterForm key="register" onSubmit={handleFormSubmit} />
+        ) : (
+          <motion.div
+            key="connect-wallet"
+            layout
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -100, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="relative flex items-center justify-center p-12"
+          >
+            <Button
+              onClick={handleWalletConnect}
+              className="w-full bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-pink-600 hover:to-yellow-600 text-white font-semibold py-6 rounded-xl transition-all duration-200 shadow-lg text-xl shadow-pink-500/20"
+            >
+              Connect Wallet
+            </Button>
+          </motion.div>
         )}
       </AnimatePresence>
 
