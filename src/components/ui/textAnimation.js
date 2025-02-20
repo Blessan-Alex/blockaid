@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 
 const quotes = [
   "Blockchain is the future of the internet.",
@@ -50,7 +50,7 @@ const TextAnimation = () => {
                 },
               }}
               exit={{ opacity: 0, y: -20 }}
-              className="inline-flex text-4xl py-4 md:text-5xl lg:text-6xl font-semibold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600"
+              className="inline-flex text-4xl py-4 md:text-5xl lg:text-6xl font-semibold tracking-wide text-transparent bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text"
             >
               {word}
               <span className="mr-[0.25em]"> </span>

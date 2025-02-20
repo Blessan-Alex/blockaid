@@ -1,34 +1,13 @@
 "use client";
-const InputField = ({ label, id, ...props }) => {
-  return (
-    <div className="space-y-2">
-      <label htmlFor={id} className="block text-sm font-medium text-gray-200">
-        {label}
-      </label>
-      <Input
-        id={id}
-        {...props}
-        className="w-full bg-slate-600/50 border-slate-500 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
-      />
-    </div>
-  );
-};
-
-// components/forms/AuthCard.jsx
-const AuthCard = ({ children, title }) => {
-  return (
-    <div className="w-full max-w-md p-8 bg-gradient-to-b from-slate-700/90 to-slate-800/90 rounded-2xl backdrop-blur-sm shadow-xl border border-slate-700">
-      <h1 className="text-3xl font-bold mb-8 text-white tracking-wider bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-        {title}
-      </h1>
-      {children}
-    </div>
-  );
-};
-
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp"; // Import InputOtp components
 import TextAnimation from "@/components/ui/textAnimation";
 
 export default function Register() {
@@ -45,59 +24,92 @@ export default function Register() {
     }));
   };
 
+  const handleAadharChange = (value) => {
+    setFormData((prev) => ({
+      ...prev,
+      aadhar: value,
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission
+    console.log("Form Submitted:", formData);
   };
 
   return (
-    <div className="min-h-screen w-full grid lg:grid-cols-2">
+    <div className="min-h-screen w-full grid lg:grid-cols-2 bg-white text-gray-900">
       {/* Form Section */}
-      <div className="relative flex items-center justify-center p-8 bg-slate-800">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:30px_30px]" />
+      <div className="relative flex items-center justify-center p-12">
+        <div className="w-full  p-12 bg-white rounded-3xl shadow-2xl border border-gray-300">
+          <h1 className="text-4xl font-bold mb-10 tracking-wider text-transparent bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text">
+            Register
+          </h1>
 
-        <AuthCard title="Register">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <InputField
-              label="Name"
-              id="name"
-              name="name"
-              type="text"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              placeholder="Enter your full name"
-            />
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="space-y-2">
+              <label htmlFor="name" className="block text-base font-medium">
+                Name
+              </label>
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                placeholder="Enter your full name"
+                className="w-full bg-gray-100 border-gray-300 text-gray-800 placeholder-gray-500 focus:border-pink-500 focus:ring-pink-500"
+              />
+            </div>
 
-            <InputField
-              label="Aadhar Number"
-              id="aadhar"
-              name="aadhar"
-              type="text"
-              value={formData.aadhar}
-              onChange={handleChange}
-              required
-              placeholder="1234 5678 9012"
-              pattern="\d{4}\s?\d{4}\s?\d{4}"
-              title="Please enter a valid 12-digit Aadhar number"
-            />
+            <div className="space-y-2">
+              <label htmlFor="aadhar" className="block text-base font-medium">
+                Aadhar Number
+              </label>
+              <div className="flex items-center justify-start p-3">
+                <InputOTP
+                  maxLength={12}
+                  value={formData.aadhar}
+                  onChange={handleAadharChange}
+                  className="flex justify-center"
+                >
+                  <InputOTPGroup>
+                    <InputOTPSlot index={0} />
+                    <InputOTPSlot index={1} />
+                    <InputOTPSlot index={2} />
+                    <InputOTPSlot index={3} />
+                  </InputOTPGroup>
+                  <InputOTPSeparator />
+                  <InputOTPGroup>
+                    <InputOTPSlot index={4} />
+                    <InputOTPSlot index={5} />
+                    <InputOTPSlot index={6} />
+                    <InputOTPSlot index={7} />
+                  </InputOTPGroup>
+                  <InputOTPSeparator />
+                  <InputOTPGroup>
+                    <InputOTPSlot index={8} />
+                    <InputOTPSlot index={9} />
+                    <InputOTPSlot index={10} />
+                    <InputOTPSlot index={11} />
+                  </InputOTPGroup>
+                </InputOTP>
+              </div>
+            </div>
 
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium py-2.5 rounded-lg transition-all duration-200 shadow-lg shadow-blue-600/20"
+              className="w-full bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-pink-600 hover:to-yellow-600 text-white font-semibold py-6 rounded-xl transition-all duration-200 shadow-lg text-xl shadow-pink-500/20"
             >
               Create Account
             </Button>
           </form>
-        </AuthCard>
+        </div>
       </div>
 
-      {/* Hero/Branding Section */}
-      <div className="hidden lg:block bg-slate-800">
-        <div className="h-full flex items-center justify-center p-8">
-          <TextAnimation />
-        </div>
+      {/* Branding / Animation Section */}
+      <div className="hidden lg:flex items-center justify-center bg-white">
+        <TextAnimation />
       </div>
     </div>
   );
