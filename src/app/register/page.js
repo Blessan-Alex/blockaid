@@ -132,10 +132,16 @@ function SuccessMessage() {
           Registration Successful!
         </h1>
         <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="picture">Picture</Label>
+          <Label
+            htmlFor="picture"
+            className="text-xl text-transparent bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text"
+          >
+            Select the image of your aadhar
+          </Label>
           <Input
             id="picture"
             type="file"
+            accept="image/*"
             className="w-full bg-gray-100 border-gray-300 text-gray-800 placeholder-gray-500 focus:border-pink-500 focus:ring-pink-500"
           />
         </div>
