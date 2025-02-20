@@ -34,6 +34,18 @@ export default function Home() {
         BLOCKAID !
       </h1>
 
+      <div className="flex justify-center overflow-hidden">
+        <motion.p
+          className={`text-center text-thin text-transparent bg-gradient-to-r from-pink-500 to-yellow-500
+          bg-clip-text   text-4xl p-10 bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-500 whitespace-nowrap ${Madimi.className}`}
+          initial={{ x: "100%" }}
+          animate={{ x: "-100%" }}
+          transition={{ repeat: Infinity, duration: 18, ease: "linear" }}
+        >
+          Say goodbye to traditional logins and hello to decentralized security. With MetaMask, your identity is in your hands.
+        </motion.p>
+      </div>
+
       <div className="flex justify-center">
         <AnimatePresence>
           <motion.div

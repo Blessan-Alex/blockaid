@@ -12,6 +12,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp"; // Import InputOtp components
 import TextAnimation from "@/components/ui/textAnimation";
+import ChatBot from "@/components/ui/ChatBot"; // Import ChatBot component
 
 function RegisterForm({ onSubmit }) {
   const [formData, setFormData] = useState({
@@ -42,10 +43,9 @@ function RegisterForm({ onSubmit }) {
   return (
     <motion.div
       layout // Ensures smooth transition
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      exit={{ y: -100, opacity: 0 }}
-      transition={{ duration: 0.25 }}
+      initial={{ y: 0 }}
+      animate={{ y: -50 }}
+      transition={{ delay: 1, duration: 0.5 }}
       className="relative flex items-center justify-center p-12"
     >
       <div className="w-full p-12 bg-white rounded-3xl shadow-2xl border border-gray-300">
@@ -227,7 +227,7 @@ export default function Register() {
   return (
     <motion.div
       layout
-      className="min-h-screen w-full grid lg:grid-cols-2 bg-white text-gray-900"
+      className="min-h-screen w-full  grid lg:grid-cols-2 bg-white text-gray-900"
     >
       <AnimatePresence mode="wait">
         {isSubmitted ? (
@@ -238,10 +238,9 @@ export default function Register() {
           <motion.div
             key="connect-wallet"
             layout
-            initial={{ y: -100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -100, opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            initial={{ y: 0 }}
+            animate={{ y: -50 }}
+            transition={{ delay: 1, duration: 0.5 }}
             className="relative flex items-center justify-center p-12"
           >
             <Button
@@ -257,6 +256,11 @@ export default function Register() {
       {/* Branding / Animation Section */}
       <div className="hidden lg:flex items-center justify-center bg-white">
         <TextAnimation />
+      </div>
+
+      {/* ChatBot */}
+      <div className="fixed bottom-4 right-0 p-10">
+        <ChatBot />
       </div>
     </motion.div>
   );
