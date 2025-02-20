@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { ethers } from "ethers";
 import { motion, AnimatePresence } from "motion/react"; // Corrected import
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -35,8 +36,7 @@ function RegisterForm({ onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Submitted:", formData);
-    onSubmit();
+    onSubmit(formData);
   };
 
   return (
@@ -117,7 +117,24 @@ function RegisterForm({ onSubmit }) {
   );
 }
 
-function SuccessMessage() {
+function SuccessMessage({ onSign }) {
+  const [isSigning, setIsSigning] = useState(false);
+  const [signStatus, setSignStatus] = useState("");
+
+  const handleSign = async () => {
+    setIsSigning(true);
+    setSignStatus("Signing message...");
+    try {
+      await onSign();
+      setSignStatus("Message signed successfully!");
+    } catch (error) {
+      console.error("Signing error:", error);
+      setSignStatus("Signing failed.");
+    } finally {
+      setIsSigning(false);
+    }
+  };
+
   return (
     <motion.div
       layout // Ensures smooth transition
@@ -145,6 +162,13 @@ function SuccessMessage() {
             className="w-full bg-gray-100 border-gray-300 text-gray-800 placeholder-gray-500 focus:border-pink-500 focus:ring-pink-500"
           />
         </div>
+        <Button
+          onClick={handleSign}
+          className="w-full mt-6 bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-pink-600 hover:to-yellow-600 text-white font-semibold py-6 rounded-xl transition-all duration-200 shadow-lg text-xl shadow-pink-500/20"
+        >
+          {isSigning ? "Signing..." : "Sign Message"}
+        </Button>
+        <p className="mt-4 text-center">{signStatus}</p>
       </div>
     </motion.div>
   );
@@ -153,13 +177,51 @@ function SuccessMessage() {
 export default function Register() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isWalletConnected, setIsWalletConnected] = useState(false);
+  const [account, setAccount] = useState(null);
+  const [provider, setProvider] = useState(null);
+  const [formData, setFormData] = useState(null);
 
-  const handleFormSubmit = () => {
+  useEffect(() => {
+    if (window.ethereum) {
+      const newProvider = new ethers.providers.Web3Provider(window.ethereum);
+      setProvider(newProvider);
+    } else {
+      console.error("MetaMask is not installed.");
+    }
+  }, []);
+
+  const handleFormSubmit = (data) => {
+    setFormData(data);
     setIsSubmitted(true);
   };
 
-  const handleWalletConnect = () => {
-    setIsWalletConnected(true);
+  const handleWalletConnect = async () => {
+    if (!provider) {
+      alert("MetaMask is not installed.");
+      return;
+    }
+    try {
+      await provider.send("eth_requestAccounts", []);
+      const signer = provider.getSigner();
+      const userAddr = await signer.getAddress();
+      setAccount(userAddr);
+      setIsWalletConnected(true);
+    } catch (error) {
+      console.error("Wallet connection error:", error);
+    }
+  };
+
+  const handleSignMessage = async () => {
+    if (!provider || !account) {
+      alert("Please connect your wallet first.");
+      return;
+    }
+    const signer = provider.getSigner();
+    const messagePayload = JSON.stringify({
+      function: "registerIdentity",
+      args: [formData.name, formData.aadhar],
+    });
+    await signer.signMessage(messagePayload);
   };
 
   return (
@@ -169,7 +231,7 @@ export default function Register() {
     >
       <AnimatePresence mode="wait">
         {isSubmitted ? (
-          <SuccessMessage key="success" />
+          <SuccessMessage key="success" onSign={handleSignMessage} />
         ) : isWalletConnected ? (
           <RegisterForm key="register" onSubmit={handleFormSubmit} />
         ) : (
