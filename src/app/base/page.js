@@ -1,20 +1,20 @@
 'use client'
-import { useRouter } from 'next/navigation'; // Import useRouter from next/router
-import { motion } from 'framer-motion'; // Import framer-motion
+import { useRouter } from 'next/navigation'; 
+import { motion } from 'framer-motion'; 
 
 export default function BasePage() {
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter(); 
 
   const handleHealthCheckup = () => {
-    router.push('/health-checkup'); // Redirect to health checkup page
+    router.push('/health-checkup'); 
   };
 
   const handleExcessFoodCollection = () => {
-    router.push('/excess-food-collection'); // Redirect to excess food collection page
+    router.push('/excess-food-collection'); 
   };
 
   const handleOtherOptions = () => {
-    alert('Other options coming soon!'); // Alert for other options
+    alert('Other options coming soon!'); 
   };
 
   return (

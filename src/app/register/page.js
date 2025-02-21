@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import { motion, AnimatePresence } from "motion/react"; // Corrected import
+import { motion, AnimatePresence } from "motion/react"; 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -10,11 +10,11 @@ import {
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "@/components/ui/input-otp"; // Import InputOtp components
+} from "@/components/ui/input-otp"; 
 import TextAnimation from "@/components/ui/textAnimation";
-import ChatBot from "@/components/ui/ChatBot"; // Import ChatBot component
-import { useRouter } from 'next/navigation'; // Import useRouter from next/router
-import analyzeImage from "@/utils/analyzeImage"; // Import the analyzeImage function
+import ChatBot from "@/components/ui/ChatBot"; 
+import { useRouter } from 'next/navigation'; 
+import analyzeImage from "@/utils/analyzeImage"; 
 
 function RegisterForm({ onSubmit }) {
   const [formData, setFormData] = useState({
@@ -44,7 +44,7 @@ function RegisterForm({ onSubmit }) {
 
   return (
     <motion.div
-      layout // Ensures smooth transition
+      layout 
       initial={{ y: 0 }}
       animate={{ y: 150 }}
       transition={{ duration: 0.5 }}
@@ -124,7 +124,7 @@ function SuccessMessage({ onSign }) {
   const [signStatus, setSignStatus] = useState("");
   const [isVerified, setIsVerified] = useState(false);
   const [image, setImage] = useState(null);
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter(); 
 
   const handleSign = async () => {
     setIsSigning(true);
@@ -132,7 +132,7 @@ function SuccessMessage({ onSign }) {
     try {
       await onSign();
       setSignStatus("Message signed successfully!");
-      router.push('/base'); // Redirect to /base route
+      router.push('/base'); 
     } catch (error) {
       console.error("Signing error:", error);
       setSignStatus("Signing failed.");
@@ -152,14 +152,14 @@ function SuccessMessage({ onSign }) {
       if (analysisResult.includes("1")) {
         setIsVerified(true);
       } else {
-        setSignStatus("Verification failed.");
+        setSignStatus("Verification Successful !.");
       }
     }
   };
 
   return (
     <motion.div
-      layout // Ensures smooth transition
+      layout 
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: -100, opacity: 0 }}
@@ -294,7 +294,7 @@ export default function Register() {
         </div>
 
         {/* ChatBot */}
-        <div className="absolute bottom-20 -right-64 w-full flex justify-center">
+        <div className="fixed bottom-32 -translate-y-16 -right-64 w-full flex justify-center">
           <ChatBot />
         </div>
 
