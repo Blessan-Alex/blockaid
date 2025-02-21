@@ -134,6 +134,34 @@ export default function Home() {
           </motion.div>
         </AnimatePresence>
       </div>
+
+      {/* Particle Background */}
+      <motion.div
+        className="absolute inset-0 z-0 pointer-events-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        {[...Array(50)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-pink-500 rounded-full"
+            style={{
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: ["0%", "100%"],
+              opacity: [1, 0],
+            }}
+            transition={{
+              duration: Math.random() * 5 + 2,
+              repeat: Infinity,
+              delay: Math.random() * 5,
+            }}
+          />
+        ))}
+      </motion.div>
     </motion.div>
   );
 }

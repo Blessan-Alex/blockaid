@@ -14,6 +14,7 @@ import {
 import TextAnimation from "@/components/ui/textAnimation";
 import ChatBot from "@/components/ui/ChatBot"; // Import ChatBot component
 import { useRouter } from 'next/navigation'; // Import useRouter from next/router
+import analyzeImage from "@/utils/analyzeImage"; // Import the analyzeImage function
 
 function RegisterForm({ onSubmit }) {
   const [formData, setFormData] = useState({
@@ -121,6 +122,8 @@ function RegisterForm({ onSubmit }) {
 function SuccessMessage({ onSign }) {
   const [isSigning, setIsSigning] = useState(false);
   const [signStatus, setSignStatus] = useState("");
+  const [isVerified, setIsVerified] = useState(false);
+  const [image, setImage] = useState(null);
   const router = useRouter(); // Initialize useRouter
 
   const handleSign = async () => {
@@ -138,6 +141,22 @@ function SuccessMessage({ onSign }) {
     }
   };
 
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
+  const handleVerify = async () => {
+    if (image) {
+      const analysisResult = await analyzeImage(image);
+      console.log(analysisResult)
+      if (analysisResult.includes("1")) {
+        setIsVerified(true);
+      } else {
+        setSignStatus("Verification failed.");
+      }
+    }
+  };
+
   return (
     <motion.div
       layout // Ensures smooth transition
@@ -149,7 +168,7 @@ function SuccessMessage({ onSign }) {
     >
       <div className="w-full p-12 bg-white rounded-3xl shadow-2xl border border-gray-300">
         <h1 className="text-4xl font-bold mb-10 tracking-wider text-transparent bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text">
-          Registration Successful!
+          Verify Documents!
         </h1>
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label
@@ -162,9 +181,21 @@ function SuccessMessage({ onSign }) {
             id="picture"
             type="file"
             accept="image/*"
+            onChange={handleImageChange}
             className="w-full bg-gray-100 border-gray-300 text-gray-800 placeholder-gray-500 focus:border-pink-500 focus:ring-pink-500"
           />
         </div>
+        <Button
+          onClick={handleVerify}
+          className="w-full mt-6 bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-pink-600 hover:to-yellow-600 text-white font-semibold py-6 rounded-xl transition-all duration-200 shadow-lg text-xl shadow-pink-500/20"
+        >
+          Verify
+        </Button>
+        {isVerified && (
+          <div className="flex justify-center mt-4">
+            <img src="https://media.tenor.com/AWKzZ19awFYAAAAi/checkmark-transparent.gif" alt="Verification Successful" />
+          </div>
+        )}
         <Button
           onClick={handleSign}
           className="w-full mt-6 bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-pink-600 hover:to-yellow-600 text-white font-semibold py-6 rounded-xl transition-all duration-200 shadow-lg text-xl shadow-pink-500/20"
@@ -231,7 +262,7 @@ export default function Register() {
     <>
       <motion.div
         layout
-        className="min-h-screen w-full grid grid-rows-2 lg:grid-cols-2 bg-white text-gray-900"
+        className="min-h-screen w-full grid grid-rows-2 lg:grid-cols-2 bg-white text-gray-900 relative"
       >
         <AnimatePresence mode="wait">
           {isSubmitted ? (
@@ -266,6 +297,34 @@ export default function Register() {
         <div className="absolute bottom-20 -right-64 w-full flex justify-center">
           <ChatBot />
         </div>
+
+        {/* Particle Background */}
+        <motion.div
+          className="absolute inset-0 z-0 pointer-events-none"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          {[...Array(50)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-pink-500 rounded-full"
+              style={{
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: ["0%", "100%"],
+                opacity: [1, 0],
+              }}
+              transition={{
+                duration: Math.random() * 5 + 2,
+                repeat: Infinity,
+                delay: Math.random() * 5,
+              }}
+            />
+          ))}
+        </motion.div>
       </motion.div>
     </>
   );

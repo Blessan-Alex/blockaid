@@ -53,6 +53,8 @@ export async function POST(request) {
     const aadhaarNumber = text.match(/\b\d{4}\s\d{4}\s\d{4}\b/);
 
     if (aadhaarNumber) {
+      {"hyy"}
+      console.log("firstttt "+aadhaarNumber[0]);
       return NextResponse.json({ aadhaarNumber: aadhaarNumber[0] });
     } else {
       return NextResponse.json({ error: 'Aadhar Number not found.' });

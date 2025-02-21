@@ -55,6 +55,7 @@ const AadharUpload = () => {
       if (data.error) {
         setError(data.error);
       } else if (data.aadhaarNumber) {
+        console.log(data.aadhaarNumber);
         setResult(data.aadhaarNumber);
       }
     } catch (error) {
