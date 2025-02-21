@@ -2,7 +2,13 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 console.log('asdasd')
 console.log(process.env.NEXT_PUBLIC_API_KEY);
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_INT_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({
+  model: "gemini-1.5-flash",
+  defaultInstructions: {
+    replyStyle: "concise, bullet points, max 2-3 lines",
+    walletInfo: "It's a MetaMask wallet. if asked how to setup asnwer ,Install MetaMask,Create a Wallet,Save the Secret Recovery Phrase (12-word phrase) securely.,Your wallet is ready!",
+  }
+});
 
 export const sendMessageToGemini = async (message) => {
   try {
@@ -14,7 +20,7 @@ export const sendMessageToGemini = async (message) => {
         },
         {
           role: "model",
-          parts: [{ text: "Great to meet you. What would you like to know?" }],
+          parts: [{ text: "Great to meet you. I am your advisor. How can I assist you today?" }],
         },
       ],
     });

@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/input-otp"; // Import InputOtp components
 import TextAnimation from "@/components/ui/textAnimation";
 import ChatBot from "@/components/ui/ChatBot"; // Import ChatBot component
+import { useRouter } from 'next/navigation'; // Import useRouter from next/router
 
 function RegisterForm({ onSubmit }) {
   const [formData, setFormData] = useState({
@@ -44,9 +45,9 @@ function RegisterForm({ onSubmit }) {
     <motion.div
       layout // Ensures smooth transition
       initial={{ y: 0 }}
-      animate={{ y: -50 }}
-      transition={{ delay: 1, duration: 0.5 }}
-      className="relative flex items-center justify-center p-12"
+      animate={{ y: 150 }}
+      transition={{ duration: 0.5 }}
+      className="flex h-1/2 items-center justify-center p-12"
     >
       <div className="w-full p-12 bg-white rounded-3xl shadow-2xl border border-gray-300">
         <h1 className="text-4xl font-bold mb-10 tracking-wider text-transparent bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text">
@@ -120,6 +121,7 @@ function RegisterForm({ onSubmit }) {
 function SuccessMessage({ onSign }) {
   const [isSigning, setIsSigning] = useState(false);
   const [signStatus, setSignStatus] = useState("");
+  const router = useRouter(); // Initialize useRouter
 
   const handleSign = async () => {
     setIsSigning(true);
@@ -127,6 +129,7 @@ function SuccessMessage({ onSign }) {
     try {
       await onSign();
       setSignStatus("Message signed successfully!");
+      router.push('/base'); // Redirect to /base route
     } catch (error) {
       console.error("Signing error:", error);
       setSignStatus("Signing failed.");
@@ -225,43 +228,45 @@ export default function Register() {
   };
 
   return (
-    <motion.div
-      layout
-      className="min-h-screen w-full  grid lg:grid-cols-2 bg-white text-gray-900"
-    >
-      <AnimatePresence mode="wait">
-        {isSubmitted ? (
-          <SuccessMessage key="success" onSign={handleSignMessage} />
-        ) : isWalletConnected ? (
-          <RegisterForm key="register" onSubmit={handleFormSubmit} />
-        ) : (
-          <motion.div
-            key="connect-wallet"
-            layout
-            initial={{ y: 0 }}
-            animate={{ y: -50 }}
-            transition={{ delay: 1, duration: 0.5 }}
-            className="relative flex items-center justify-center p-12"
-          >
-            <Button
-              onClick={handleWalletConnect}
-              className="w-full bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-pink-600 hover:to-yellow-600 text-white font-semibold py-6 rounded-xl transition-all duration-200 shadow-lg text-xl shadow-pink-500/20"
+    <>
+      <motion.div
+        layout
+        className="min-h-screen w-full grid grid-rows-2 lg:grid-cols-2 bg-white text-gray-900"
+      >
+        <AnimatePresence mode="wait">
+          {isSubmitted ? (
+            <SuccessMessage key="success" onSign={handleSignMessage} />
+          ) : isWalletConnected ? (
+            <RegisterForm key="register" onSubmit={handleFormSubmit} />
+          ) : (
+            <motion.div
+              key="connect-wallet"
+              layout
+              initial={{ y: 0 }}
+              animate={{ y: 150 }}
+              transition={{ delay: 1, duration: 0.5 }}
+              className="relative flex items-center justify-center p-12"
             >
-              Connect Wallet
-            </Button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <Button
+                onClick={handleWalletConnect}
+                className="w-full bg-gradient-to-r translate-x-22 from-pink-500 to-yellow-500 hover:from-pink-600 hover:to-yellow-600 text-white font-semibold py-6 rounded-xl transition-all duration-200 shadow-lg text-xl shadow-pink-500/20"
+              >
+                Connect Wallet
+              </Button>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-      {/* Branding / Animation Section */}
-      <div className="hidden lg:flex items-center justify-center bg-white">
-        <TextAnimation />
-      </div>
+        {/* Branding / Animation Section */}
+        <div className="hidden lg:flex items-center justify-center bg-white">
+          <TextAnimation />
+        </div>
 
-      {/* ChatBot */}
-      <div className="fixed bottom-4 right-0 p-10">
-        <ChatBot />
-      </div>
-    </motion.div>
+        {/* ChatBot */}
+        <div className="absolute bottom-20 -right-64 w-full flex justify-center">
+          <ChatBot />
+        </div>
+      </motion.div>
+    </>
   );
 }

@@ -38,7 +38,7 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="relative">
+    <div className="relative ">
       <Button
         onClick={toggleChatbot}
         className="bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-pink-600 hover:to-yellow-600 text-white font-semibold py-2 px-4 rounded-full transition-all duration-200 shadow-lg"
@@ -50,7 +50,7 @@ export default function Chatbot() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="absolute top-12 right-0 w-80 p-4 bg-white rounded-lg shadow-lg border border-gray-300"
+          className="absolute top-12 h-1/2 overflow-scroll right-0 w-80 p-4 bg-white rounded-lg shadow-lg border border-gray-300"
         >
           <h2 className="text-lg font-bold mb-2">How can I help you?</h2>
           <div className="space-y-2">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Madimi_One } from "next/font/google";
 import Navbarx from "@/components/ui/Navbarx";
@@ -15,9 +15,23 @@ const Madimi = Madimi_One({
 export default function Home() {
   const router = useRouter();
   const [expanded, setExpanded] = useState(false);
+  const [moveUp, setMoveUp] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMoveUp(true);
+    }, 1000); // 1 second delay
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-radial from-white to-black">
+    <motion.div
+      className={`min-h-screen bg-gradient-radial from-white to-black ${moveUp ? "pt-10" : ""}`}
+      initial={{ y: 0 }}
+      animate={{ y: moveUp ? -50 : 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <Navbarx fontname={Madimi.className} />
 
       <h1
@@ -37,7 +51,7 @@ export default function Home() {
       <div className="flex justify-center overflow-hidden">
         <motion.p
           className={`text-center text-thin text-transparent bg-gradient-to-r from-pink-500 to-yellow-500
-          bg-clip-text   text-4xl p-10 bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-500 whitespace-nowrap ${Madimi.className}`}
+          bg-clip-text text-4xl p-10 bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-500 whitespace-nowrap ${Madimi.className}`}
           initial={{ x: "100%" }}
           animate={{ x: "-100%" }}
           transition={{ repeat: Infinity, duration: 18, ease: "linear" }}
@@ -120,6 +134,6 @@ export default function Home() {
           </motion.div>
         </AnimatePresence>
       </div>
-    </div>
+    </motion.div>
   );
 }
