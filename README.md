@@ -30,6 +30,13 @@ or
 yarn add axios
 ```
 
+### Install Truffle and Ganache
+
+```sh
+npm install -g truffle
+npm install -D ganache-cli
+```
+
 ### If you face any issues
 
 If you encounter module resolution issues, try the following steps:
@@ -48,21 +55,23 @@ If you encounter module resolution issues, try the following steps:
 
 3. Restart your development server.
 
-Now you should be good to go! 🚀
-
 ### Running Blockchain Ganache
 
-To be an admin and add transactions to the blockchain, you need to run Ganache:
+To be an admin and interact with the blockchain, you need to run Ganache:
 
 ```sh
-ganache-cli
+npx ganache-cli
 ```
 
-Ensure that your smart contract is deployed on Ganache using Truffle:
+### Deploying Smart Contract on Ganache
+
+If you have a Truffle project, deploy your smart contract using:
 
 ```sh
 npx truffle migrate --network development
 ```
+
+Ensure your Truffle configuration (`truffle-config.js`) is set up for Ganache.
 
 ## Run the Deployment Server
 
