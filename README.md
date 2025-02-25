@@ -2,7 +2,78 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+## Installation Instructions
+
+To install the required dependencies, run the following commands:
+
+### Install `ethers` (Version 5)
+
+```sh
+npm install ethers@5
+```
+
+or
+
+```sh
+yarn add ethers@5
+```
+
+### Install `axios`
+
+```sh
+npm install axios
+```
+
+or
+
+```sh
+yarn add axios
+```
+
+### Install Truffle and Ganache
+
+```sh
+npm install -g truffle
+npm install -D ganache-cli
+```
+
+### If you face any issues
+
+If you encounter module resolution issues, try the following steps:
+
+1. Delete `node_modules` and `package-lock.json` (or `yarn.lock`):
+
+   ```sh
+   rm -rf node_modules package-lock.json  # or yarn.lock
+   ```
+
+2. Reinstall dependencies:
+
+   ```sh
+   npm install  # or yarn install
+   ```
+
+3. Restart your development server.
+
+### Running Blockchain Ganache
+
+To be an admin and interact with the blockchain, you need to run Ganache:
+
+```sh
+npx ganache-cli
+```
+
+### Deploying Smart Contract on Ganache
+
+If you have a Truffle project, deploy your smart contract using:
+
+```sh
+npx truffle migrate --network development
+```
+
+Ensure your Truffle configuration (`truffle-config.js`) is set up for Ganache.
+
+## Run the Deployment Server
 
 ```bash
 npm run dev
