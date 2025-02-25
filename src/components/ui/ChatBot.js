@@ -46,8 +46,8 @@ const ChatBot = () => {
     <motion.div
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className="w-full max-w-md mx-auto  bg-white p-4 rounded-t-lg shadow-lg border border-gray-300"
+          exit={{ opacity: 0, y: -10 }}
+          className="absolute top-12 h-1/2 overflow-scroll right-0 w-80 p-4 bg-white rounded-lg shadow-lg border border-gray-300"
     >
       <div className="h-full  overflow-y-auto max-h-44 p-4">
         {messages.map((message, index) => (
